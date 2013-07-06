@@ -18,7 +18,7 @@ webSocketServer.on('connection', function(ws) {
 
     	if (flags.binary === true) {
     		console.log('We got an ArrayBuffer');
-    		sendMessage(message, clients[id].name || id);
+    		sendImage(message, clients[id].name || id);
     	} else {
     		console.log('Got string message');
 	    	console.log(message);
@@ -49,6 +49,17 @@ webSocketServer.on('connection', function(ws) {
 
 function sendServerMessage(message) {
 	sendMessage(message, 'Server');
+}
+
+function sendImage(arrayBuffer, user) {
+    for(var key in clients) {
+        clients[key].send(JSON.stringify({
+            'type': 'image',
+            'data': arrayBuffer,
+            'date': new Date(),
+            'user': user
+        }));
+    }
 }
 
 function sendMessage(message, user) {

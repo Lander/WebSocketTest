@@ -37,6 +37,7 @@ WebSocketTest.prototype.init = function(){
                 'name': this.username.value
             }));
             _this.closeModal();
+            window.localStorage.setItem('username', this.username.value);
             this.username.value = '';
         }
     });
@@ -47,6 +48,8 @@ WebSocketTest.prototype.init = function(){
             _this.openModal();
         }
     });
+
+    this.loadUsername(ws);
 
     ws.onmessage = function(e) {
         _this.postMessage(e.data);
@@ -61,16 +64,18 @@ WebSocketTest.prototype.init = function(){
     $(this.options.wsAttach)[0].ondrop = function(e){
         e.preventDefault();
 
-        var file = e.dataTransfer.files[0],
+        var img = document.createElement("img"),
+            file = e.dataTransfer.files[0],
             reader = new FileReader();
 
-        reader.onload = function(event){
+        reader.onload = function(e){
+//            img.src = e.target.result;
+//            messageHeight = img.height;
 //            $('<div class="message"></div>').css({
-//                'background': 'url(' + event.target.result + ') no-repeat 50% 50%',
-//                'height': '200px'
-//            }).appendTo(_this.options.wsBoard);
-            ws.send(event.target.result);
-
+//                'background': 'url(' + e.target.result + ') no-repeat 50% 50%',
+//                'height': messageHeight
+//            }).prependTo(_this.options.wsBoard);
+            ws.send(e.target.result);
         };
         reader.readAsArrayBuffer(file);
 
@@ -80,6 +85,15 @@ WebSocketTest.prototype.init = function(){
 
 WebSocketTest.prototype.postMessage = function(json){
     var message = JSON.parse(json);
+    if (message.type === 'image') {
+        console.log(message);
+        var blob = new Blob([message.data], {type: "image/png"});
+            $('<div class="message"></div>').css({
+                'background': 'url(' + blob + ') no-repeat 50% 50%',
+                'height': blob
+            }).prependTo($('#input'));
+    }
+
     if(message.user == 'Server'){
         $(this.options.wsDebug).show();
         if($('.debug__message').length >= 5){
@@ -111,6 +125,17 @@ WebSocketTest.prototype.closeModal = function(){
 WebSocketTest.prototype.openModal = function(){
     $(this.options.wsModal).show();
     $(this.options.wsOverlay).show();
+};
+
+WebSocketTest.prototype.loadUsername = function(ws){
+//    if(window.localStorage.getItem('username')){
+//        ws.send(JSON.stringify({
+//            'type': 'change-name',
+//            'name': window.localStorage.getItem('username')
+//        }));
+//        this.closeModal();
+//    }
+//    console.log(window.localStorage.getItem('username'));
 };
 
 $(function(){
