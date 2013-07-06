@@ -55,7 +55,6 @@ function sendImage(data, user) {
         clients[key].send(JSON.stringify({
             'type': 'image',
             'data': data.data,
-            'height': data.height,
             'date': new Date(),
             'user': user
         }));

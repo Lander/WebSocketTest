@@ -64,18 +64,17 @@ WebSocketTest.prototype.init = function(){
     $(this.options.wsAttach)[0].ondrop = function(e){
         e.preventDefault();
 
-        var img = document.createElement("img"),
-            file = e.dataTransfer.files[0],
-            reader = new FileReader();
+        var file = e.dataTransfer.files[0],
+        reader = new FileReader();
 
         reader.onload = function(e){
-            img.src = e.target.result;
-            var messageHeight = img.height;
+//            img.src = e.target.result;
+//            var messageHeight = img.height;
 //            $('<div class="message"></div>').css({
 //                'background': 'url(' + e.target.result + ') no-repeat 50% 50%',
 //                'height': messageHeight
 //            }).prependTo(_this.options.wsBoard);
-            ws.send(JSON.stringify({'type': 'image', 'data': e.target.result, 'height': messageHeight}));
+            ws.send(JSON.stringify({'type': 'image', 'data': e.target.result}));
         };
         reader.readAsDataURL(file);
 
@@ -88,10 +87,17 @@ WebSocketTest.prototype.postMessage = function(json){
     if (message.type === 'image') {
         console.log(message);
 
-        $('<div class="message"></div>').css({
-            'background': 'url(' + message.data + ') no-repeat 50% 50%',
-            'height': message.height
-        }).prependTo($('#input'));
+        var img = document.createElement("img");
+
+        img.src = message.data;
+
+        img.onload = function() {
+            $('<div class="message"></div>').css({
+                'background': 'url(' + message.data + ') no-repeat 50% 50%',
+                'height': img.height
+            }).prependTo($('#input'));
+        }
+
     }
 
     if(message.user == 'Server'){
