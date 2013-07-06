@@ -35,9 +35,19 @@
     display: inline;
     zoom: 1;
 }
+.form-output__holder.form-output__holder_type_submit { width: 852px; }
+.form-output__holder.form-output__holder_type_attach { width: 34px; }
 .form-output__holder.form-output__holder_type_settings { width: 34px; }
-.form-output__holder.form-output__holder_type_submit { width: 906px; }
 
+.form-output__attach {
+    display: block;
+    height: 34px;
+    margin-top: 14px;
+
+    background-image: url('../images/attach.png');
+
+    text-indent: -99999px;
+}
 .form-output__settings {
     display: block;
     height: 34px;
