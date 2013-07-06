@@ -18,18 +18,37 @@ webSocketServer.on('connection', function(ws) {
 
         var messageObj = JSON.parse(message);
 
-        for(var key in clients) {
-        	clients[key].send(JSON.stringify({
-	            	'data': messageObj.message,
-	            	'date': new Date(),
-	            	'user': id
-            	}));
+        if (messageObj.type == 'change-name') {
+        	sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
+        	clients[id].name = messageObj.name;
+        } else {
+	        for(var key in clients) {
+	        	clients[key].send(JSON.stringify({
+		            	'data': messageObj.message,
+		            	'date': new Date(),
+		            	'user': clients[id].name || id
+	            	}));
+	        }
         }
+
     });
 
     ws.on('close', function() {
         console.log('соединение закрыто ' + id);
         delete clients[id];
     });
-
 });
+
+function sendServerMessage(message) {
+	sendMessage(message, 'server');
+}
+
+function sendMessage(id, message, user) {
+    for(var key in clients) {
+    	clients[key].send(JSON.stringify({
+            	'data': message,
+            	'date': new Date(),
+            	'user': user
+        	}));
+    }
+}
