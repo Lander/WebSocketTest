@@ -4,7 +4,7 @@ function WebSocketTest(options){
 }
 
 WebSocketTest.defaultOptions = {
-    wsURL: 'ws://localhost:8081',
+    wsURL: 'ws://10.18.45.6:8081',
     wsForm: '#output',
     wsBoard: '#input'
 };
@@ -20,6 +20,10 @@ WebSocketTest.prototype.init = function(){
             _this.postMessage(this.message.value);
         }
     });
+
+    ws.onmessage = function(e) {
+        _this.postMessage(e.data);
+    };
 };
 
 WebSocketTest.prototype.postMessage = function(message){
