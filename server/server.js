@@ -18,6 +18,8 @@ webSocketServer.on('connection', function(ws) {
 
         var messageObj = JSON.parse(message);
 
+        sendServerMessage(message);
+
         if (messageObj.type == 'change-name') {
             sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
             clients[id].name = messageObj.name;
@@ -33,7 +35,7 @@ webSocketServer.on('connection', function(ws) {
 });
 
 function sendServerMessage(message) {
-    sendMessage(message, 'server');
+	sendMessage(message, 'Server');
 }
 
 function sendMessage(message, user) {
