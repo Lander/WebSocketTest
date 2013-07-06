@@ -22,15 +22,8 @@ webSocketServer.on('connection', function(ws) {
         	sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
         	clients[id].name = messageObj.name;
         } else {
-	        for(var key in clients) {
-	        	clients[key].send(JSON.stringify({
-		            	'data': messageObj.message,
-		            	'date': new Date(),
-		            	'user': clients[id].name || id
-	            	}));
-	        }
+        	sendMessage(messageObj.message, clients[id].name || id);
         }
-
     });
 
     ws.on('close', function() {
@@ -43,7 +36,7 @@ function sendServerMessage(message) {
 	sendMessage(message, 'server');
 }
 
-function sendMessage(id, message, user) {
+function sendMessage(message, user) {
     for(var key in clients) {
     	clients[key].send(JSON.stringify({
             	'data': message,
