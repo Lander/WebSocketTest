@@ -4,7 +4,7 @@ function WebSocketTest(options){
 }
 
 WebSocketTest.defaultOptions = {
-    wsURL: 'ws://10.18.45.6:8081',
+    wsURL: 'ws://127.0.0.1:8081',
     wsOutputForm: '.form-output',
     wsBoard: '#input',
     wsUsernameForm: '.form-username',
@@ -16,8 +16,8 @@ WebSocketTest.defaultOptions = {
 };
 
 WebSocketTest.prototype.init = function(){
-    var ws = new WebSocket(this.options.wsURL),
-        _this = this;
+    ws = new WebSocket(this.options.wsURL);
+        var _this = this;
 
     $(this.options.wsOutputForm).on({
         submit: function(e){
@@ -65,12 +65,14 @@ WebSocketTest.prototype.init = function(){
             reader = new FileReader();
 
         reader.onload = function(event){
-            $('<div class="message"></div>').css({
-                'background': 'url(' + event.target.result + ') no-repeat 50% 50%',
-                'height': '200px'
-            }).appendTo(_this.options.wsBoard);
+//            $('<div class="message"></div>').css({
+//                'background': 'url(' + event.target.result + ') no-repeat 50% 50%',
+//                'height': '200px'
+//            }).appendTo(_this.options.wsBoard);
+            ws.send(event.target.result);
+
         };
-        reader.readAsDataURL(file);
+        reader.readAsArrayBuffer(file);
 
         return false;
     };

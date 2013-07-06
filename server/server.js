@@ -13,19 +13,32 @@ webSocketServer.on('connection', function(ws) {
     clients[id] = ws;
     console.log("новое соединение " + id);
 
-    ws.on('message', function(message) {
-        console.log('получено сообщение ' + message);
+    ws.on('message', function(message, flags) {
+    	console.log(flags);
 
-        var messageObj = JSON.parse(message);
+    	if (flags.binary === true) {
+    		console.log('We got an ArrayBuffer');
+    		sendMessage(message, clients[id].name || id);
+    	} else {
+    		console.log('Got string message');
+	    	console.log(message);
+	        var messageObj = JSON.parse(message);
 
-        sendServerMessage(message);
+	        sendServerMessage(message);
 
-        if (messageObj.type == 'change-name') {
-            sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
-            clients[id].name = messageObj.name;
-        } else {
-            sendMessage(messageObj.message, clients[id].name || id);
-        }
+	        if (messageObj.type == 'change-name') {
+	            sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
+	            clients[id].name = messageObj.name;
+	        } else if (messageObj.type == 'image') {
+	        	console.log('We got an image');
+	        	console.log(messageObj.message);
+	        	sendMessage(messageObj.message, clients[id].name || id);
+	        }
+	        else {
+	        	console.log('Получено текстовое сообщение ' + message);
+	            sendMessage(messageObj.message, clients[id].name || id);
+    		}
+    	}
     });
 
     ws.on('close', function() {
