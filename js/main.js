@@ -91,10 +91,7 @@ WebSocketTest.prototype.postMessage = function(json){
             '</div>'
         );
     } else {
-        if($('.message').length >= 5){
-            $('.message').eq(0).remove();
-        }
-        $(this.options.wsBoard).append(
+        $(this.options.wsBoard).prepend(
             '<div class="message">' +
                 '<div class="message-user">' + message.user + '</div>' +
                 '<div class="message-content">' + message.data + '</div>' +
