@@ -8,12 +8,22 @@
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/TextMessage.js"></script>
 </head>
-<body>
+<!--[if lt IE 8]><body class="lt-ie10 lt-ie9 lt-ie8 ie7"><![endif]-->
+<!--[if IE 8]><body class="lt-ie10 lt-ie9 ie8"><![endif]-->
+<!--[if IE 9]><body class="lt-ie10 ie9"><![endif]-->
+<!--[if gt IE 9]><!--><body><!--<![endif]-->
 
     <div class="layout">
-        <form id="output" name="output">
-            <input type="text" name="message" placeholder="Type message here..." />
-            <input type="submit" value="Submit Message" />
+        <form class="form-output" name="output">
+            <div class="form-output__holder form-output__holder_type_input">
+                <input class="form-input" type="text" name="message" placeholder="Type message here..." />
+            </div>
+            <div class="form-output__holder form-output__holder_type_submit">
+                <input class="form-button" type="submit" value="Submit Message" />
+            </div>
+            <div class="form-output__holder form-output__holder_type_settings">
+                <a class="form-output__settings" href="#">Settings</a>
+            </div>
         </form>
 
         <div id="input"></div>

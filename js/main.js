@@ -5,7 +5,7 @@ function WebSocketTest(options){
 
 WebSocketTest.defaultOptions = {
     wsURL: 'ws://10.18.45.6:8081',
-    wsForm: '#output',
+    wsForm: '.form-output',
     wsBoard: '#input'
 };
 
@@ -26,8 +26,15 @@ WebSocketTest.prototype.init = function(){
     };
 };
 
-WebSocketTest.prototype.postMessage = function(message){
-    $(this.options.wsBoard).append('<div>' + message + '</div>');
+WebSocketTest.prototype.postMessage = function(json){
+    var message = JSON.parse(json);
+    $(this.options.wsBoard).append(
+        '<div class="message">' +
+            '<div class="message-user">' + message.user + '</div>' +
+            '<div class="message-content">' + message.data + '</div>' +
+            '<div class="message-time">' + message.date + '</div>' +
+        '</div>'
+    );
 };
 
 $(function(){
