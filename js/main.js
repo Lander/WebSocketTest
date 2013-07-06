@@ -1,10 +1,32 @@
-var ws = new WebSocket("ws://localhost:8081");
+function WebSocketTest(options){
+    options = $.extend({}, WebSocketTest.defaultOptions, options);
+    this.options = options;
+}
 
-$(function(){
-    $('#output').on({
+WebSocketTest.defaultOptions = {
+    wsURL: 'ws://localhost:8081',
+    wsForm: '#output',
+    wsBoard: '#input'
+};
+
+WebSocketTest.prototype.init = function(){
+    var ws = new WebSocket(this.options.wsURL),
+        _this = this;
+
+    $(this.options.wsForm).on({
         submit: function(e){
             e.preventDefault();
             ws.send(this.message.value);
+            _this.postMessage(this.message.value);
         }
     });
+};
+
+WebSocketTest.prototype.postMessage = function(message){
+    $(this.options.wsBoard).append('<div>' + message + '</div>');
+};
+
+$(function(){
+    var webSocketTest = new WebSocketTest();
+    webSocketTest.init();
 });
