@@ -118,14 +118,15 @@ WebSocketTest.prototype.openModal = function(){
 };
 
 WebSocketTest.prototype.loadUsername = function(ws){
-//    if(window.localStorage.getItem('username')){
-//        ws.send(JSON.stringify({
-//            'type': 'change-name',
-//            'name': window.localStorage.getItem('username')
-//        }));
-//        this.closeModal();
-//    }
-//    console.log(window.localStorage.getItem('username'));
+    if(window.localStorage.getItem('username')){
+        ws.onopen = function() {
+            ws.send(JSON.stringify({
+                'type': 'change-name',
+                'name': window.localStorage.getItem('username')
+            }));
+        };
+        this.closeModal();
+    }
 };
 
 $(function(){
