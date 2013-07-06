@@ -16,12 +16,13 @@ webSocketServer.on('connection', function(ws) {
     ws.on('message', function(message) {
         console.log('получено сообщение ' + message);
 
-        for(var key in clients) {
-        	clients[key].send(JSON.stringify({
-	            	'data': JSON.parse(message).message,
-	            	'date': new Date(),
-	            	'user': key
-            	}));
+        var messageObj = JSON.parse(message);
+
+        if (messageObj.type == 'change-name') {
+        	sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
+        	clients[id].name = messageObj.name;
+        } else {
+        	sendMessage(messageObj.message, clients[id].name || id);
         }
     });
 
@@ -29,5 +30,18 @@ webSocketServer.on('connection', function(ws) {
         console.log('соединение закрыто ' + id);
         delete clients[id];
     });
-
 });
+
+function sendServerMessage(message) {
+	sendMessage(message, 'server');
+}
+
+function sendMessage(message, user) {
+    for(var key in clients) {
+    	clients[key].send(JSON.stringify({
+            	'data': message,
+            	'date': new Date(),
+            	'user': user
+        	}));
+    }
+}
