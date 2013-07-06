@@ -21,10 +21,10 @@ webSocketServer.on('connection', function(ws) {
         sendServerMessage(message);
 
         if (messageObj.type == 'change-name') {
-        	sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
-        	clients[id].name = messageObj.name;
+            sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
+            clients[id].name = messageObj.name;
         } else {
-        	sendMessage(messageObj.message, clients[id].name || id);
+            sendMessage(messageObj.message, clients[id].name || id);
         }
     });
 
@@ -40,10 +40,10 @@ function sendServerMessage(message) {
 
 function sendMessage(message, user) {
     for(var key in clients) {
-    	clients[key].send(JSON.stringify({
-            	'data': message,
-            	'date': new Date(),
-            	'user': user
-        	}));
+        clients[key].send(JSON.stringify({
+            'data': message,
+            'date': new Date(),
+            'user': user
+        }));
     }
 }

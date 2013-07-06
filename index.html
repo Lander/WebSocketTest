@@ -14,6 +14,7 @@
 <!--[if gt IE 9]><!--><body><!--<![endif]-->
 
     <div class="layout">
+
         <form class="form-output" name="output">
             <div class="form-output__holder form-output__holder_type_input">
                 <input class="form-input" type="text" name="message" placeholder="Type message here..." />
@@ -21,13 +22,34 @@
             <div class="form-output__holder form-output__holder_type_submit">
                 <input class="form-button" type="submit" value="Submit Message" />
             </div>
+            <div class="form-output__holder form-output__holder_type_attach">
+                <span class="form-output__attach" title="Attach File">Attach File</span>
+            </div>
             <div class="form-output__holder form-output__holder_type_settings">
-                <a class="form-output__settings" href="#">Settings</a>
+                <a class="form-output__settings" href="#" title="Settings">Settings</a>
             </div>
         </form>
 
         <div id="input"></div>
+
     </div>
+
+    <div class="modal">
+        <div class="modal__body">
+            <form class="form-username" name="setup_username">
+                <div class="form-username__holder form-username__holder_type_input">
+                    <input class="form-input" type="text" name="username" placeholder="Enter the username" />
+                </div>
+                <div class="form-username__holder form-username__holder_type_submit">
+                    <input class="form-button" type="submit" value="Submit" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="debug"></div>
 
 </body>
 </html>
