@@ -2,18 +2,21 @@
 <html>
 <head>
     <title>Web Socket: Test Page</title>
+    <link rel="stylesheet" href="css/normalize.css" type="text/css" media="all" />
     <link rel="stylesheet" href="css/main.css" type="text/css" media="all" />
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
 
-    <form id="output" name="output">
-        <input type="text" name="message" placeholder="Message" />
-        <input type="submit" value="Submit" />
-    </form>
+    <div class="layout">
+        <form id="output" name="output">
+            <input type="text" name="message" placeholder="Type message here..." />
+            <input type="submit" value="Submit Message" />
+        </form>
 
-    <div id="input"></div>
+        <div id="input"></div>
+    </div>
 
 </body>
 </html>
