@@ -4,7 +4,7 @@ function WebSocketTest(options){
 }
 
 WebSocketTest.defaultOptions = {
-    wsURL: 'ws://127.0.0.1:8081',
+    wsURL: 'ws://10.18.45.6:8081',
     wsOutputForm: '.form-output',
     wsBoard: '#input',
     wsUsernameForm: '.form-username',
