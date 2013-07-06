@@ -69,15 +69,15 @@ WebSocketTest.prototype.init = function(){
             reader = new FileReader();
 
         reader.onload = function(e){
-//            img.src = e.target.result;
-//            messageHeight = img.height;
+            img.src = e.target.result;
+            var messageHeight = img.height;
 //            $('<div class="message"></div>').css({
 //                'background': 'url(' + e.target.result + ') no-repeat 50% 50%',
 //                'height': messageHeight
 //            }).prependTo(_this.options.wsBoard);
-            ws.send(e.target.result);
+            ws.send(JSON.stringify({'type': 'image', 'data': e.target.result, 'height': messageHeight}));
         };
-        reader.readAsArrayBuffer(file);
+        reader.readAsDataURL(file);
 
         return false;
     };
@@ -87,11 +87,11 @@ WebSocketTest.prototype.postMessage = function(json){
     var message = JSON.parse(json);
     if (message.type === 'image') {
         console.log(message);
-        var blob = new Blob([message.data], {type: "image/png"});
-            $('<div class="message"></div>').css({
-                'background': 'url(' + blob + ') no-repeat 50% 50%',
-                'height': blob
-            }).prependTo($('#input'));
+
+        $('<div class="message"></div>').css({
+            'background': 'url(' + message.data + ') no-repeat 50% 50%',
+            'height': message.height
+        }).prependTo($('#input'));
     }
 
     if(message.user == 'Server'){

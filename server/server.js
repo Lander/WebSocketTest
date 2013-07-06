@@ -26,13 +26,12 @@ webSocketServer.on('connection', function(ws) {
 
 	        sendServerMessage(message);
 
-	        if (messageObj.type == 'change-name') {
+	        if (messageObj.type === 'change-name') {
 	            sendServerMessage('User '+ id + ' from now on ' + messageObj.name);
 	            clients[id].name = messageObj.name;
-	        } else if (messageObj.type == 'image') {
+	        } else if (messageObj.type === 'image') {
 	        	console.log('We got an image');
-	        	console.log(messageObj.message);
-	        	sendMessage(messageObj.message, clients[id].name || id);
+	        	sendImage(messageObj, clients[id].name || id);
 	        }
 	        else {
 	        	console.log('Получено текстовое сообщение ' + message);
@@ -51,11 +50,12 @@ function sendServerMessage(message) {
 	sendMessage(message, 'Server');
 }
 
-function sendImage(arrayBuffer, user) {
+function sendImage(data, user) {
     for(var key in clients) {
         clients[key].send(JSON.stringify({
             'type': 'image',
-            'data': arrayBuffer,
+            'data': data.data,
+            'height': data.height,
             'date': new Date(),
             'user': user
         }));
