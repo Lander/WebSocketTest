@@ -218,3 +218,11 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+#############
+## Node.JS
+#############
+
+server/node_modules/*
+server/node.exe
+server/npm.cmd
