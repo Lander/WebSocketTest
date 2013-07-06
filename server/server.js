@@ -16,11 +16,13 @@ webSocketServer.on('connection', function(ws) {
     ws.on('message', function(message) {
         console.log('получено сообщение ' + message);
 
+        var messageObj = JSON.parse(message);
+
         for(var key in clients) {
         	clients[key].send(JSON.stringify({
-	            	'data': JSON.parse(message).message,
+	            	'data': messageObj.message,
 	            	'date': new Date(),
-	            	'user': key
+	            	'user': id
             	}));
         }
     });
