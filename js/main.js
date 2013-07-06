@@ -16,8 +16,8 @@ WebSocketTest.prototype.init = function(){
     $(this.options.wsForm).on({
         submit: function(e){
             e.preventDefault();
-            ws.send(this.message.value);
-            _this.postMessage(this.message.value);
+            var message = new TextMessage();
+            ws.send(message.prepare(this.message.value));
         }
     });
 

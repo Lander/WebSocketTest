@@ -17,7 +17,11 @@ webSocketServer.on('connection', function(ws) {
         console.log('получено сообщение ' + message);
 
         for(var key in clients) {
-            clients[key].send(message);
+        	clients[key].send(JSON.stringify({
+	            	'data': JSON.parse(message).message,
+	            	'date': new Date(),
+	            	'user': key
+            	}));
         }
     });
 
