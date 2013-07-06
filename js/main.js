@@ -11,7 +11,8 @@ WebSocketTest.defaultOptions = {
     wsModal: '.modal',
     wsOverlay: '.overlay',
     wsDebug: '.debug',
-    wsSettings: '.form-output__settings'
+    wsSettings: '.form-output__settings',
+    wsAttach: '.form-output__attach'
 };
 
 WebSocketTest.prototype.init = function(){
@@ -49,6 +50,29 @@ WebSocketTest.prototype.init = function(){
 
     ws.onmessage = function(e) {
         _this.postMessage(e.data);
+    };
+
+    $(this.options.wsAttach)[0].ondragover = function(e){
+        e.preventDefault();
+    };
+    $(this.options.wsAttach)[0].ondragend = function(){
+        e.preventDefault();
+    };
+    $(this.options.wsAttach)[0].ondrop = function(e){
+        e.preventDefault();
+
+        var file = e.dataTransfer.files[0],
+            reader = new FileReader();
+
+        reader.onload = function(event){
+            $('<div class="message"></div>').css({
+                'background': 'url(' + event.target.result + ') no-repeat 50% 50%',
+                'height': '200px'
+            }).appendTo(_this.options.wsBoard);
+        };
+        reader.readAsDataURL(file);
+
+        return false;
     };
 };
 
