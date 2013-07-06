@@ -247,7 +247,10 @@
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
     font-size: 10px;
 }
-.debug__message { margin-bottom: 10px; }
+.debug__message {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
 
 .form-username {
     font-size: 1px;
