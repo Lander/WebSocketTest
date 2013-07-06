@@ -61,14 +61,17 @@ WebSocketTest.prototype.init = function(){
     $(this.options.wsAttach)[0].ondrop = function(e){
         e.preventDefault();
 
-        var file = e.dataTransfer.files[0],
+        var img = document.createElement("img"),
+            file = e.dataTransfer.files[0],
             reader = new FileReader();
 
-        reader.onload = function(event){
+        reader.onload = function(e){
+            img.src = e.target.result;
+            messageHeight = img.height;
             $('<div class="message"></div>').css({
-                'background': 'url(' + event.target.result + ') no-repeat 50% 50%',
-                'height': '200px'
-            }).appendTo(_this.options.wsBoard);
+                'background': 'url(' + e.target.result + ') no-repeat 50% 50%',
+                'height': messageHeight
+            }).prependTo(_this.options.wsBoard);
         };
         reader.readAsDataURL(file);
 
