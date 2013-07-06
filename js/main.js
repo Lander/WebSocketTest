@@ -37,6 +37,7 @@ WebSocketTest.prototype.init = function(){
                 'name': this.username.value
             }));
             _this.closeModal();
+            window.localStorage.setItem('username', this.username.value);
             this.username.value = '';
         }
     });
@@ -47,6 +48,8 @@ WebSocketTest.prototype.init = function(){
             _this.openModal();
         }
     });
+
+    this.loadUsername(ws);
 
     ws.onmessage = function(e) {
         _this.postMessage(e.data);
@@ -112,6 +115,17 @@ WebSocketTest.prototype.closeModal = function(){
 WebSocketTest.prototype.openModal = function(){
     $(this.options.wsModal).show();
     $(this.options.wsOverlay).show();
+};
+
+WebSocketTest.prototype.loadUsername = function(ws){
+//    if(window.localStorage.getItem('username')){
+//        ws.send(JSON.stringify({
+//            'type': 'change-name',
+//            'name': window.localStorage.getItem('username')
+//        }));
+//        this.closeModal();
+//    }
+//    console.log(window.localStorage.getItem('username'));
 };
 
 $(function(){
